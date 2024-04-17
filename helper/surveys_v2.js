@@ -18,7 +18,7 @@ exports.surveySubmissionReport = async function (req, res) {
                 bodyParam.dataSource = process.env.SURVEY_DATASOURCE_NAME;
             }
 
-            let submissionId = req.query.submissionId ? req.query.submissionId : req.body.submissionId;
+            let submissionId = req.query.submissionId ? req.query.submissionId.replace(/[^a-zA-Z0-9_-]/g, ''): req.body.submissionId.replace(/[^a-zA-Z0-9_-]/g, '');
 
             bodyParam.filter.fields[0].value = submissionId;
 

@@ -697,7 +697,7 @@ exports.instanceCriteriaReportData = async function (req, res) {
                 }
 
                 bodyParam.filter = {
-                    "type": "and", "fields": [{ "type": "selector", "dimension": "observationSubmissionId", "value": submissionId },
+                    "type": "and", "fields": [{ "type": "selector", "dimension": "observationSubmissionId", "value": submissionId.replace(/[^a-zA-Z0-9_-]/g, '') },
                     { "type": "not", "field": { "type": "selector", "dimension": "questionAnswer", "value": "" } }]
                 };
 
@@ -1091,7 +1091,7 @@ exports.observationCriteriaReportData = async function(req, res) {
                 }
 
                 bodyParam.filter = {
-                    "type": "and", "fields": [{ "type": "selector", "dimension": "observationId", "value": req.body.observationId },
+                    "type": "and", "fields": [{ "type": "selector", "dimension": "observationId", "value": req.body.observationId.replace(/[^a-zA-Z0-9_-]/g, '') },
                     { "type": "not", "field": { "type": "selector", "dimension": "questionAnswer", "value": "" } }]
                 };
 
@@ -1474,9 +1474,9 @@ async function getEvidenceData(inputObj) {
     return new Promise(async function (resolve, reject) {
         try {
 
-            let submissionId = inputObj.submissionId;
-            let entityId = inputObj.entityId;
-            let observationId = inputObj.observationId;
+            let submissionId = inputObj.submissionId.replace(/[^a-zA-Z0-9_-]/g, '');
+            let entityId = inputObj.entityId.replace(/[^a-zA-Z0-9_-]/g, '');
+            let observationId = inputObj.observationId.replace(/[^a-zA-Z0-9_-]/g, '');
             let entityType = inputObj.entityType;
 
             let bodyParam = gen.utils.getDruidQuery("get_evidence_query");

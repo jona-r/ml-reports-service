@@ -39,7 +39,7 @@ async function getEntityList(entityId, childType, token) {
         "Content-Type": "application/json",
         "X-authenticated-user-token": token
       },
-      uri: urlPrefix + endpoints.GET_ENTITY_LIST + "/" + entityId + "?type=" + childType
+      uri: urlPrefix + endpoints.GET_ENTITY_LIST + "/" + entityId.replace(/[^a-zA-Z0-9_-]/g, '')+ "?type=" + childType
     }
 
     rp(options).then(function (resp) {
@@ -64,7 +64,7 @@ async function getSurveySubmissionStatusById(submissionId, token) {
         "Content-Type": "application/json",
         "X-authenticated-user-token": token
       },
-      uri: urlPrefix + endpoints.GET_SURVEY_SUBMISSION_STATUS + "/" + submissionId
+      uri: urlPrefix + endpoints.GET_SURVEY_SUBMISSION_STATUS + "/" + submissionId.replace(/[^a-zA-Z0-9_-]/g, '')
     }
 
     rp(options).then(function (resp) {
@@ -88,7 +88,7 @@ async function getObservationSubmissionStatusById(submissionId, token) {
         "Content-Type": "application/json",
         "X-authenticated-user-token": token
       },
-      uri: urlPrefix + endpoints.GET_OBSERVATION_SUBMISSION_STATUS + "/" + submissionId
+      uri: urlPrefix + endpoints.GET_OBSERVATION_SUBMISSION_STATUS + "/" + submissionId.replace(/[^a-zA-Z0-9_-]/g, '')
     }
 
     rp(options).then(function (resp) {
@@ -112,7 +112,7 @@ async function getEntityObservationSubmissionsStatus(entityId, observationId, to
         "Content-Type": "application/json",
         "X-authenticated-user-token": token
       },
-      uri: urlPrefix + endpoints.GET_ENTITY_OBSERVATION_SUBMISSIONS_STATUS + "/" + observationId + "?entityId=" + entityId
+      uri: urlPrefix + endpoints.GET_ENTITY_OBSERVATION_SUBMISSIONS_STATUS + "/" + observationId.replace(/[^a-zA-Z0-9_-]/g, '') + "?entityId=" + entityId.replace(/[^a-zA-Z0-9_-]/g, '')
     }
 
     rp(options).then(function (resp) {
@@ -137,7 +137,7 @@ async function getTotalEntities(observationId, token) {
         "Content-Type": "application/json",
         "X-authenticated-user-token": token
       },
-      uri: urlPrefix + endpoints.OBSERVATION_DETAILS + "/" + observationId
+      uri: urlPrefix + endpoints.OBSERVATION_DETAILS + "/" + observationId.replace(/[^a-zA-Z0-9_-]/g, '')
     }
 
     rp(options).then(function (resp) {

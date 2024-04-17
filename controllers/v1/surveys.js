@@ -537,14 +537,13 @@ exports.listAllEvidences = async function (req, res) {
             let filter = {};
 
             if (req.body.submissionId && req.body.questionId) {
-                filter = { "type": "and", fields: [{ "type": "selector", "dimension": "surveySubmissionId", "value": req.body.submissionId }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId }] };
+                filter = { "type": "and", fields: [{ "type": "selector", "dimension": "surveySubmissionId", "value": req.body.submissionId.replace(/[^a-zA-Z0-9_-]/g, '') }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId.replace(/[^a-zA-Z0-9_-]/g, '') }] };
             }
             else if (req.body.solutionId && req.body.questionId) {
-                filter = { "type": "and", fields: [{ "type": "selector", "dimension": "solutionId", "value": req.body.solutionId }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId }] };
+                filter = { "type": "and", fields: [{ "type": "selector", "dimension": "solutionId", "value": req.body.solutionId.replace(/[^a-zA-Z0-9_-]/g, '')}, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId.replace(/[^a-zA-Z0-9_-]/g, '') }] };
             }
 
             bodyParam.filter = filter;
-
             //pass the query as body param and get the resul from druid
             let options = gen.utils.getDruidConnection();
             options.method = "POST";

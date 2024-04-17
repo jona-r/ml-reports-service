@@ -1,13 +1,16 @@
 {
   "name": "ml-report-service",
-  "version": "1.0.0",
+  "version": "8.0.0",
   "private": true,
   "scripts": {
-    "start": "app.js",
+    "start": "node app.js",
     "test": "mocha --timeout 10000",
     "coverage": " nyc --reporter=lcov mocha --timeout 10000 test --exit"
   },
   "dependencies": {
+    "aws-sdk": "^2.523.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "chart.js": "^2.9.4",
     "chartjs-node-canvas": "^3.1.0",
     "chartjs-plugin-datalabels": "^0.7.0",
@@ -15,20 +18,17 @@
     "cookie-parser": "~1.4.4",
     "dotenv": "^8.2.0",
     "druid-query": "^2.1.0",
-    "ejs": "^2.6.2",
+    "ejs": "^3.1.7",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.3.0",
+    "mocha": "^10.1.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
+    "object.omit": "^3.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "require-all": "^3.0.0",
     "rimraf": "^3.0.0",
-    "uuid": "^3.3.3",
-    "aws-sdk": "^2.523.0",
-    "object.omit": "^3.0.0",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "mocha": "^6.2.2"
+    "uuid": "^3.3.3"
   }
 }

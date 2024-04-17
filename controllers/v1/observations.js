@@ -1980,7 +1980,7 @@ exports.pdfReportsUrl = async function (req, response) {
 
     try {
 
-    let folderPath = Buffer.from(req.query.id, 'base64').toString('ascii');
+    let folderPath = Buffer.from(req.query.id, 'base64').toString('ascii').replace(/\.\.\//g, '');
 
     let files = fs.readdirSync(__dirname + '/../../' + folderPath );
     let pdfFile = files.filter( file => file.match(new RegExp(`.*\.(${'.pdf'})`, 'ig')));
@@ -2284,7 +2284,7 @@ async function instanceCriteriaReportData(req, res) {
         }
 
         bodyParam.filter = {
-          "type": "and", "fields": [{ "type": "selector", "dimension": "observationSubmissionId", "value": submissionId },
+          "type": "and", "fields": [{ "type": "selector", "dimension": "observationSubmissionId", "value": submissionId.replace(/[^a-zA-Z0-9_-]/g, '') },
           { "type": "not", "field": { "type": "selector", "dimension": "questionAnswer", "value": "" } }]
         };
 
@@ -3032,7 +3032,7 @@ async function observationCriteriaReportData(req, res) {
                   bodyParam.dataSource = process.env.OBSERVATION_DATASOURCE_NAME;
                 }
 
-                bodyParam.filter = {"type": "and", "fields":[{ "type": "selector", "dimension": "observationId", "value": req.body.observationId},
+                bodyParam.filter = {"type": "and", "fields":[{ "type": "selector", "dimension": "observationId", "value": req.body.observationId.replace(/[^a-zA-Z0-9_-]/g, '')},
                                    {"type":"not","field":{"type":"selector","dimension":"questionAnswer","value":""}}]};
                 
 
@@ -3439,7 +3439,7 @@ async function allEvidencesList(req, res) {
   return new Promise(async function (resolve, reject) {
     
     try {
-
+  
     if (!req.body.submissionId && !req.body.questionId) {
       var response = {
         result: false,
@@ -3472,17 +3472,17 @@ async function allEvidencesList(req, res) {
           let filter = {};
 
           if (req.body.submissionId && req.body.questionId) {
-            filter = { "type": "and", fields: [{ "type": "selector", "dimension": "observationSubmissionId", "value": req.body.submissionId }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId }] };
+            filter = { "type": "and", fields: [{ "type": "selector", "dimension": "observationSubmissionId", "value": req.body.submissionId.replace(/[^a-zA-Z0-9_-]/g, '') }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId.replace(/[^a-zA-Z0-9_-]/g, '')  }] };
           }
           else if (req.body.entityId && req.body.observationId && req.body.questionId) {
             let entityType = "school";
             if(req.body.entityType){
               entityType = req.body.entityType;
             }
-            filter = { "type": "and", fields: [{ "type": "selector", "dimension": "entity", "value": req.body.entityId }, { "type": "selector", "dimension": "observationId", "value": req.body.observationId }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId }] };
+            filter = { "type": "and", fields: [{ "type": "selector", "dimension": "entity", "value": req.body.entityId.replace(/[^a-zA-Z0-9_-]/g, '')  }, { "type": "selector", "dimension": "observationId", "value": req.body.observationId .replace(/[^a-zA-Z0-9_-]/g, '') }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId.replace(/[^a-zA-Z0-9_-]/g, '')  }] };
           }
           else if (req.body.observationId && req.body.questionId) {
-            filter = { "type": "and", fields: [{ "type": "selector", "dimension": "observationId", "value": req.body.observationId }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId }] };
+            filter = { "type": "and", fields: [{ "type": "selector", "dimension": "observationId", "value": req.body.observationId.replace(/[^a-zA-Z0-9_-]/g, '')  }, { "type": "selector", "dimension": "questionExternalId", "value": req.body.questionId .replace(/[^a-zA-Z0-9_-]/g, '') }] };
           }
 
           bodyParam.filter = filter;
@@ -3531,9 +3531,9 @@ async function getEvidenceData(inputObj) {
   return new Promise(async function (resolve, reject) {
      try {
 
-        let submissionId = inputObj.submissionId;
-        let entityId = inputObj.entityId;
-        let observationId = inputObj.observationId;
+        let submissionId = inputObj.submissionId.replace(/[^a-zA-Z0-9_-]/g, '');
+        let entityId = inputObj.entityId.replace(/[^a-zA-Z0-9_-]/g, '');
+        let observationId = inputObj.observationId.replace(/[^a-zA-Z0-9_-]/g, '');
         let entityType = inputObj.entityType;
 
         let bodyParam = gen.utils.getDruidQuery("get_evidence_query");
