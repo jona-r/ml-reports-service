@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:16
 
 WORKDIR /opt/reports
 
@@ -14,6 +14,7 @@ RUN npm install
 
 #copy all files 
 COPY . /opt/reports
+
 
 #expose the application port
 EXPOSE 3000
